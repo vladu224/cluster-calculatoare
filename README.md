@@ -43,7 +43,7 @@ The cluster's stations are simulated with Docker containers. Administrators mana
 
 | Component | Responsibility |
 | --- | --- |
-| Auth | Login, JWT (RS256), user accounts |
+| Auth | Login, JWT (HS256, shared secret), user accounts |
 | Cluster | Stations, subgroups, assignments, health checks |
 | Scripts | Script catalog, script requests, job launching |
 | Workers | Run scripts over SSH and report results |
@@ -101,9 +101,10 @@ RABBITMQ_PASSWORD=guest
 ADMIN_USERNAME=admin
 ADMIN_EMAIL=admin@cluster.local
 ADMIN_PASSWORD=Admin123!
+JWT_SECRET=change-me-to-a-long-random-string
 ```
 
-The `ADMIN_*` values create the first administrator account on startup.
+The `ADMIN_*` values create the first administrator account on startup. `JWT_SECRET` signs and verifies access tokens (HS256); every service that validates tokens receives the same value.
 
 ### 2. Start the backend
 
@@ -126,7 +127,7 @@ npm run dev
 | http://localhost:5173 | Frontend |
 | http://localhost:8080/api/auth/health | Auth Service health check |
 | http://localhost:8080/api/auth/docs | Auth Service API docs (Swagger) |
-| http://localhost:15672 | RabbitMQ dashboard |
+| http://localhost:15673 | RabbitMQ dashboard |
 
 ## Common commands
 
@@ -151,7 +152,7 @@ docker compose logs -f auth      # follow a service's logs
 ## Status
 
 - [x] Project setup
-- [ ] Auth Service
+- [ ] Auth Service (login, JWT HS256, refresh, logout, `/me` done; user management and role checks pending)
 - [ ] Cluster Service
 - [ ] Scripts Service
 - [ ] Workers
