@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 from app import models
 from app.database import Base, SessionLocal, engine
-from app.routers import auth
+from app.routers import auth, users
 from app.seed import seed_admin
 
 
@@ -22,6 +22,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Auth Service", root_path="/api/auth", lifespan=lifespan)
 
 app.include_router(auth.router)
+app.include_router(users.router)
 
 @app.get("/health")
 def health():

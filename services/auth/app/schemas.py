@@ -26,6 +26,14 @@ class TokenResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
 
+class UserCreate(BaseModel):
+    username: str = Field(min_length=3, max_length=50)
+    email: str = Field(min_length=3, max_length=255, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    password: str = Field(min_length=8, max_length=72)
+
+class UserStatusUpdate(BaseModel):
+    status: UserStatus
+
 class UserOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
