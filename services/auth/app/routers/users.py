@@ -2,6 +2,7 @@ import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy import or_, select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -19,12 +20,24 @@ def get_user_or_404(db: Session, user_id: uuid.UUID) -> User:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
+
+def get_managed_user(db: Session, user_id: uuid.UUID, admin: User) -> User:
+    """Fetch a user that the admin is allowed to change or delete: never an Admin account."""
+    if user_id == admin.id:
+        raise HTTPException(status_code=400, detail="You cannot modify your own account")
+
+    user = get_user_or_404(db, user_id)
+    if user.role == Role.ADMIN:
+        raise HTTPException(status_code=403, detail="Admin accounts cannot be modified")
+    return user
+
+
 @router.get("", response_model=list[UserOut])
 def list_users(
     role: Role | None = None,
     status: UserStatus | None = None,
     admin: User = Depends(require_admin),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     query = select(User).order_by(User.created_at)
     if role is not None:
@@ -39,11 +52,13 @@ def list_users(
 def create_maintainer(
     body: UserCreate,
     admin: User = Depends(require_admin),
-    db: Session = Depends(get_db),    
+    db: Session = Depends(get_db),
 ):
+    conflict = HTTPException(status_code=409, detail="Username or email already in use")
+
     existing = db.scalar(select(User).where(or_(User.username == body.username, User.email == body.email)))
     if existing is not None:
-        raise HTTPException(status_code=409, detail="Username or email already in use")
+        raise conflict
 
     user = User(
         username=body.username,
@@ -54,7 +69,12 @@ def create_maintainer(
     )
 
     db.add(user)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        # A concurrent request took the same username or email between the check and the insert
+        db.rollback()
+        raise conflict
     db.refresh(user)
 
     return user
@@ -76,10 +96,7 @@ def update_status(
     admin: User = Depends(require_admin),
     db: Session = Depends(get_db),
 ):
-    if user_id == admin.id:
-        raise HTTPException(status_code=400, detail="You cannot change your own status")
-
-    user = get_user_or_404(db, user_id)
+    user = get_managed_user(db, user_id, admin)
     user.status = body.status
 
     if body.status == UserStatus.DISABLED:
@@ -95,10 +112,7 @@ def delete_user(
     admin: User = Depends(require_admin),
     db: Session = Depends(get_db),
 ):
-    if user_id == admin.id:
-        raise HTTPException(status_code=400, detail="You cannot delete your own account")
-
-    user = get_user_or_404(db, user_id)
+    user = get_managed_user(db, user_id, admin)
     db.delete(user)
     db.commit()
 

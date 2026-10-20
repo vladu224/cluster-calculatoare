@@ -31,6 +31,18 @@ class UserCreate(BaseModel):
     email: str = Field(min_length=3, max_length=255, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
     password: str = Field(min_length=8, max_length=72)
 
+    @field_validator("email")
+    @classmethod
+    def normalize_email(cls, value: str) -> str:
+        return value.lower()
+
+    @field_validator("password")
+    @classmethod
+    def password_within_bcrypt_limit(cls, value: str) -> str:
+        if len(value.encode()) > 72:
+            raise ValueError("Password must be at most 72 bytes")
+        return value
+
 class UserStatusUpdate(BaseModel):
     status: UserStatus
 
@@ -44,3 +56,4 @@ class UserOut(BaseModel):
     status: UserStatus
     created_at: datetime
     last_login_at: datetime | None
+
