@@ -1,6 +1,10 @@
 FROM python:3.12-slim
+
 WORKDIR /code
-COPY requirements.txt .
+
+COPY libs/auth_client /libs/auth_client
+RUN pip install --no-cache-dir /libs/auth_client
+COPY services/auth/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY app ./app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+COPY services/auth/app ./app
+CMD [ "watchfiles", "python -m app.main", "app" ]
