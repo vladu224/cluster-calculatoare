@@ -82,12 +82,14 @@ class AuthServicer(auth_pb2_grpc.AuthServiceServicer):
         return auth_pb2.OperationResponse(success=True, message=f"User '{username}' created")
 
     def DeactivateUser(self, request, context):
-        self._require_admin(request.token, context)
+        claims = self._require_admin(request.token, context)
 
         with SessionLocal() as db:
             user = db.scalar(select(User).where(User.username == request.username))
             if user is None:
                 context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+            if str(user.uid) == claims["sub"]:
+                context.abort(grpc.StatusCode.PERMISSION_DENIED, "You cannot deactivate your own account")
             if not user.is_active:
                 context.abort(grpc.StatusCode.FAILED_PRECONDITION, "Account is already inactive")
 
