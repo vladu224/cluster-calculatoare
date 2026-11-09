@@ -1,0 +1,11 @@
+pyproject.toml
+src/auth_client/__init__.py
+src/auth_client/auth_pb2.py
+src/auth_client/auth_pb2.pyi
+src/auth_client/auth_pb2_grpc.py
+src/auth_client/client.py
+src/auth_client.egg-info/PKG-INFO
+src/auth_client.egg-info/SOURCES.txt
+src/auth_client.egg-info/dependency_links.txt
+src/auth_client.egg-info/requires.txt
+src/auth_client.egg-info/top_level.txt
