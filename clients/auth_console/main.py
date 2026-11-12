@@ -66,7 +66,7 @@ def deactivate_user(client: AuthClient, state: ConsoleState) -> None:
 def validate_token(client: AuthClient, state: ConsoleState) -> None:
     token = input("Token (Enter = current token): ").strip() or state.token
     if token is None:
-        print("No token givenand you are not logged in.")
+        print("No token given and you are not logged in.")
         return
 
     claims = client.validate_token(token)

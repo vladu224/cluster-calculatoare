@@ -81,12 +81,14 @@ class ActivateUserRequest(_message.Message):
     def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
 
 class TokenClaims(_message.Message):
-    __slots__ = ("sub", "role")
+    __slots__ = ("sub", "username", "role")
     SUB_FIELD_NUMBER: _ClassVar[int]
+    USERNAME_FIELD_NUMBER: _ClassVar[int]
     ROLE_FIELD_NUMBER: _ClassVar[int]
     sub: str
+    username: str
     role: Role
-    def __init__(self, sub: _Optional[str] = ..., role: _Optional[_Union[Role, str]] = ...) -> None: ...
+    def __init__(self, sub: _Optional[str] = ..., username: _Optional[str] = ..., role: _Optional[_Union[Role, str]] = ...) -> None: ...
 
 class OperationResponse(_message.Message):
     __slots__ = ("success", "message")

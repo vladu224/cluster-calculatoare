@@ -29,6 +29,7 @@ class UserInfo:
 @dataclass(frozen=True)
 class TokenClaims:
     sub: str
+    username: str
     role: Role
 
 
@@ -76,7 +77,7 @@ class AuthClient:
 
     def validate_token(self, token: str) -> TokenClaims:
         response = self._call(self._stub.ValidateToken, auth_pb2.TokenRequest(token=token))
-        return TokenClaims(sub=response.sub, role=PROTO_TO_ROLE[response.role])
+        return TokenClaims(sub=response.sub, username=response.username, role=PROTO_TO_ROLE[response.role])
 
     def destroy_token(self, token: str) -> str:
         return self._call(self._stub.DestroyToken, auth_pb2.TokenRequest(token=token))

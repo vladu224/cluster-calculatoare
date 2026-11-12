@@ -60,7 +60,9 @@ message ActivateUserRequest {
 
 message TokenClaims {
   string sub = 1;
-  Role role = 2;
+  string username = 2;
+  Role role = 3;
+  
 }
 
 message OperationResponse {

@@ -24,15 +24,15 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16\x61uth_client/auth.proto\x12\x04\x61uth\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\x1d\n\x0cTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x1e\n\rTokenResponse\x12\r\n\x05token\x18\x01 \x01(\t\"R\n\x04User\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x18\n\x04role\x18\x03 \x01(\x0e\x32\n.auth.Role\x12\x11\n\tis_active\x18\x04 \x01(\x08\"%\n\x08UserList\x12\x19\n\x05users\x18\x01 \x03(\x0b\x32\n.auth.User\"N\n\x11\x43reateUserRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x18\n\x04role\x18\x03 \x01(\x0e\x32\n.auth.Role\"8\n\x15\x44\x65\x61\x63tivateUserRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"9\n\x13\x41\x63tivateUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"4\n\x0bTokenClaims\x12\x0b\n\x03sub\x18\x01 \x01(\t\x12\x18\n\x04role\x18\x02 \x01(\x0e\x32\n.auth.Role\"5\n\x11OperationResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t*?\n\x04Role\x12\x14\n\x10ROLE_UNSPECIFIED\x10\x00\x12\x11\n\rADMINISTRATOR\x10\x01\x12\x0e\n\nMAINTAINER\x10\x02\x32\xb1\x03\n\x0b\x41uthService\x12\x30\n\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.TokenResponse\x12/\n\tListUsers\x12\x12.auth.TokenRequest\x1a\x0e.auth.UserList\x12>\n\nCreateUser\x12\x17.auth.CreateUserRequest\x1a\x17.auth.OperationResponse\x12\x46\n\x0e\x44\x65\x61\x63tivateUser\x12\x1b.auth.DeactivateUserRequest\x1a\x17.auth.OperationResponse\x12\x42\n\x0c\x41\x63tivateUser\x12\x19.auth.ActivateUserRequest\x1a\x17.auth.OperationResponse\x12\x36\n\rValidateToken\x12\x12.auth.TokenRequest\x1a\x11.auth.TokenClaims\x12;\n\x0c\x44\x65stroyToken\x12\x12.auth.TokenRequest\x1a\x17.auth.OperationResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16\x61uth_client/auth.proto\x12\x04\x61uth\"2\n\x0cLoginRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\x1d\n\x0cTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x1e\n\rTokenResponse\x12\r\n\x05token\x18\x01 \x01(\t\"R\n\x04User\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x18\n\x04role\x18\x03 \x01(\x0e\x32\n.auth.Role\x12\x11\n\tis_active\x18\x04 \x01(\x08\"%\n\x08UserList\x12\x19\n\x05users\x18\x01 \x03(\x0b\x32\n.auth.User\"N\n\x11\x43reateUserRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x18\n\x04role\x18\x03 \x01(\x0e\x32\n.auth.Role\"8\n\x15\x44\x65\x61\x63tivateUserRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"9\n\x13\x41\x63tivateUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"F\n\x0bTokenClaims\x12\x0b\n\x03sub\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x18\n\x04role\x18\x03 \x01(\x0e\x32\n.auth.Role\"5\n\x11OperationResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t*?\n\x04Role\x12\x14\n\x10ROLE_UNSPECIFIED\x10\x00\x12\x11\n\rADMINISTRATOR\x10\x01\x12\x0e\n\nMAINTAINER\x10\x02\x32\xb1\x03\n\x0b\x41uthService\x12\x30\n\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.TokenResponse\x12/\n\tListUsers\x12\x12.auth.TokenRequest\x1a\x0e.auth.UserList\x12>\n\nCreateUser\x12\x17.auth.CreateUserRequest\x1a\x17.auth.OperationResponse\x12\x46\n\x0e\x44\x65\x61\x63tivateUser\x12\x1b.auth.DeactivateUserRequest\x1a\x17.auth.OperationResponse\x12\x42\n\x0c\x41\x63tivateUser\x12\x19.auth.ActivateUserRequest\x1a\x17.auth.OperationResponse\x12\x36\n\rValidateToken\x12\x12.auth.TokenRequest\x1a\x11.auth.TokenClaims\x12;\n\x0c\x44\x65stroyToken\x12\x12.auth.TokenRequest\x1a\x17.auth.OperationResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'auth_client.auth_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_ROLE']._serialized_start=576
-  _globals['_ROLE']._serialized_end=639
+  _globals['_ROLE']._serialized_start=594
+  _globals['_ROLE']._serialized_end=657
   _globals['_LOGINREQUEST']._serialized_start=32
   _globals['_LOGINREQUEST']._serialized_end=82
   _globals['_TOKENREQUEST']._serialized_start=84
@@ -50,9 +50,9 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_ACTIVATEUSERREQUEST']._serialized_start=408
   _globals['_ACTIVATEUSERREQUEST']._serialized_end=465
   _globals['_TOKENCLAIMS']._serialized_start=467
-  _globals['_TOKENCLAIMS']._serialized_end=519
-  _globals['_OPERATIONRESPONSE']._serialized_start=521
-  _globals['_OPERATIONRESPONSE']._serialized_end=574
-  _globals['_AUTHSERVICE']._serialized_start=642
-  _globals['_AUTHSERVICE']._serialized_end=1075
+  _globals['_TOKENCLAIMS']._serialized_end=537
+  _globals['_OPERATIONRESPONSE']._serialized_start=539
+  _globals['_OPERATIONRESPONSE']._serialized_end=592
+  _globals['_AUTHSERVICE']._serialized_start=660
+  _globals['_AUTHSERVICE']._serialized_end=1093
 # @@protoc_insertion_point(module_scope)

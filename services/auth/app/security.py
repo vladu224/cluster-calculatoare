@@ -8,7 +8,7 @@ from app.config import settings
 from app.models import User
 
 ALGORITHM = "HS256"
-REQUIRED_CLAIMS = ["iss", "sub", "exp", "jti", "role"]
+REQUIRED_CLAIMS = ["iss", "sub", "exp", "jti", "role", "username"]
 
 
 def hash_password(password: str) -> str:
@@ -26,6 +26,7 @@ def create_token(user: User) -> str:
         "exp": datetime.now(timezone.utc) + timedelta(minutes=settings.token_minutes),
         "jti": str(uuid.uuid4()),
         "role": user.role.value,
+        "username": user.username,
     }
     return jwt.encode(payload, settings.jwt_secret, algorithm=ALGORITHM)
 

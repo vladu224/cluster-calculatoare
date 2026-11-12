@@ -121,7 +121,11 @@ class AuthServicer(auth_pb2_grpc.AuthServiceServicer):
 
     def ValidateToken(self, request, context):
         claims = self._validate(request.token, context, grpc.StatusCode.UNAUTHENTICATED)
-        return auth_pb2.TokenClaims(sub=claims["sub"], role=ROLE_TO_PROTO[Role(claims["role"])])
+        return auth_pb2.TokenClaims(
+            sub=claims["sub"],
+            username=claims["username"],
+            role=ROLE_TO_PROTO[Role(claims["role"])],
+        )
 
     def DestroyToken(self, request, context):
         self._validate(request.token, context, grpc.StatusCode.UNAUTHENTICATED)
